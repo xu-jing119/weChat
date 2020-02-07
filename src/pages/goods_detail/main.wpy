@@ -1,0 +1,13 @@
+<style lang="less">
+
+</style>
+
+<script>
+import wepy from 'wepy'
+
+export default class extends wepy.page {}
+</script>
+
+<template>
+  <view>轮播main页面</view>
+</template>

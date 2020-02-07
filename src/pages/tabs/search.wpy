@@ -1,0 +1,19 @@
+<style lang="less">
+
+</style>
+
+<script>
+import wepy from 'wepy'
+import mix from "@/mixins/tabs/search.js"
+
+export default class extends wepy.page {
+  mixins = [mix]
+}
+</script>
+
+<template>
+<view>
+  <van-search value="{{ value }}" placeholder="请输入搜索关键词" show-action bind:change="onChange" bind:search="onSearch" bind:cancel="onCancel"/>
+  <view>{{SuggestList.length}}</view>
+</view>
+</template>

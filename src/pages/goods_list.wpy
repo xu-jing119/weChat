@@ -1,0 +1,17 @@
+<style lang="less">
+
+</style>
+
+<script>
+import wepy from 'wepy'
+
+export default class extends wepy.page {
+    onLoad(options){
+        console.log(options)
+    }
+}
+</script>
+
+<template>
+  <view>goods_list 页面</view>
+</template>

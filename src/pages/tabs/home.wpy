@@ -1,0 +1,93 @@
+<style lang="less">
+swiper {
+  height: 350rpx;
+  navigator,
+  image {
+    width: 750rpx;
+    height: 100%;
+  }
+}
+.cates {
+  display: flex;
+  justify-content: space-around;
+  margin: 40rpx 0;
+  image {
+    width: 128rpx;
+    height: 140rpx;
+  }
+}
+.floor {
+  .floorTop {
+    .img {
+      height: 50rpx;
+      width: 640rpx;
+      display: block;
+    }
+    .floor-item{
+      .pic1{
+        float:left;
+        height: 190rpx;
+        margin:8rpx;
+        margin-top: 0;
+        &:nth-child(1){
+          height: 390rpx;
+        }
+      }
+    }
+  }
+}
+</style>
+
+<script>
+import wepy from 'wepy';
+import mix from '@/mixins/tabs/home.js';
+
+export default class extends wepy.page {
+  mixins = [mix];
+}
+</script>
+
+<template>
+  <view>
+    <swiper circular indicator-dots>
+      <block wx:for="{{swiperList}}" wx:key="index">
+        <swiper-item>
+          <navigator
+            url="{{item.navigator_url}}"
+            open-type="{{item.open_type}}"
+          >
+            <image src="{{item.image_src}}" />
+          </navigator>
+        </swiper-item>
+      </block>
+    </swiper>
+    <view class="cates">
+      <block wx:for="{{cateList}}" wx:key="index">
+        <navigator
+          url="/pages/tabs/cates"
+          open-type="{{item.open_type}}"
+          wx:if="{{item.navigator_url!==undefined}}"
+        >
+          <image src="{{item.image_src}}" />
+        </navigator>
+        <image src="{{item.image_src}}" wx:else />
+      </block>
+    </view>
+
+    <view class="floor">
+      <view class="floorTop" wx:for="{{floorList}}" wx:key="index">
+        <image class="img" src="{{item.floor_title.image_src}}" />
+        <view class="floor-item">
+          <image
+            class="pic1"
+            wx:for="{{item.product_list}}"
+            wx:key="index"
+            src="{{item.image_src}}"
+            style="width:{{item.image_width}}rpx;"
+            @tap="getListData({{item.navigator_url}})"
+          />
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
