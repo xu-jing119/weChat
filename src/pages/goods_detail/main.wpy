@@ -5,9 +5,14 @@
 <script>
 import wepy from 'wepy'
 
-export default class extends wepy.page {}
+export default class extends wepy.page {
+  onLoad(options){
+    console.log(options);
+    
+  }
+}
 </script>
 
 <template>
-  <view>轮播main页面</view>
+  <view>商品详情页面</view>
 </template>

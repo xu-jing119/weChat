@@ -65,9 +65,13 @@ export default class extends wepy.app {
 "usingComponents": {
   "van-badge": "./assets/vant/badge/index",
   "van-badge-group": "./assets/vant/badge-group/index",
-    "van-row": "./assets/vant/row/index",
+  "van-row": "./assets/vant/row/index",
   "van-col": "./assets/vant/col/index",
-   "van-search": "./assets/vant/search/index"
+  "van-search": "./assets/vant/search/index",
+  "van-cell": "./assets/vant/cell/index",
+  "van-cell-group": "./assets/vant/cell-group/index",
+    "van-icon": "./assets/vant/icon/index",
+    "van-tag": "./assets/vant/tag/index"
 }
 
   }
