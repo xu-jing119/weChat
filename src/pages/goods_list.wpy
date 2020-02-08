@@ -33,7 +33,7 @@ export default class extends wepy.page {
   <view>
     <!-- 商品列表区域 -->
     <block wx:for="{{goodsList}}" wx:key="index">
-    <van-card num="{{item.goods_number}}" price="{{item.goods_price}}" title="{{item.goods_name}}" thumb="{{item.goods_small_logo}}"/>
+    <van-card num="{{item.goods_number}}" price="{{item.goods_price}}" title="{{item.goods_name}}" thumb="{{item.goods_small_logo}}" @tap="goGoodsDetail({{item.goods_id}})"/>
     <!-- 分割线 -->
     <view class="line"></view>
     </block>

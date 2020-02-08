@@ -18,6 +18,13 @@ export default class extends wepy.mixin {
     this.cid = options.id || '';
     this.getGoodsList();
   }
+  methods={
+    goGoodsDetail(id){
+      wepy.navigateTo({
+        url:'/pages/goods_detail/main?id='+id
+      })
+    }
+  }
   //获取商品列表数据
  async getGoodsList(cb) {
    this.isLoading=true
