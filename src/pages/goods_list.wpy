@@ -20,7 +20,10 @@ export default class extends wepy.page {
   config={
       navigationBarTitleText: "商品列表",
       //触底操作 100像素
-      onReachBottomDistance:100
+      onReachBottomDistance:100,
+      //开启下拉刷新
+      enablePullDownRefresh:true,
+      backgroundColor:'#eee'
   }
     
 }

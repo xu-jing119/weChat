@@ -19,7 +19,7 @@ export default class extends wepy.mixin {
     this.getGoodsList();
   }
   //获取商品列表数据
- async getGoodsList() {
+ async getGoodsList(cb) {
    this.isLoading=true
       const {data:res} = await wepy.get("/goods/search",{
           query:this.query,
@@ -35,6 +35,7 @@ export default class extends wepy.mixin {
       this.total = res.message.total
       this.isLoading=false
       this.$apply()
+      cb && cb()
   }
   // 触底操作
   onReachBottom(){
@@ -50,5 +51,18 @@ export default class extends wepy.mixin {
     }
     this.pagenum++
     this.getGoodsList()
+  }
+  //下拉刷新操作
+  onPullDownRefresh(){
+    //初始化必要的字段值
+    this.pagenum=1
+    this.total=0
+    this.goodsList=[]
+    this.isBom=this.isLoading=false
+    //重新发起数据请求
+    this.getGoodsList(()=>{
+    //停止下拉刷新
+    wepy.stopPullDownRefresh()
+    })
   }
 }
