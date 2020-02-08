@@ -4,7 +4,13 @@ export default class extends wepy.mixin {
     query: '',
     cid: '',
     pagenum: 1,
-    pagesize: 10
+    pagesize: 10,
+    goodsList:[],
+    total:0,
+    //数据是否已经加载完毕
+    isBom:false,
+    //是否在请求数据
+    isLoading:false
   };
   onLoad(options) {
     console.log(options);
@@ -14,6 +20,7 @@ export default class extends wepy.mixin {
   }
   //获取商品列表数据
  async getGoodsList() {
+   this.isLoading=true
       const {data:res} = await wepy.get("/goods/search",{
           query:this.query,
           cid:this.cid,
@@ -21,5 +28,27 @@ export default class extends wepy.mixin {
           pagesize:this.pagesize
       })
       console.log(res)
+      if(res.meta.status!==200){
+        return wepy.baseToast()
+      }
+      this.goodsList=[...this.goodsList,...res.message.goods]
+      this.total = res.message.total
+      this.isLoading=false
+      this.$apply()
+  }
+  // 触底操作
+  onReachBottom(){
+    //判断是否在请求其他数据
+    if(this.isLoading){
+      return
+    }
+    // console.log('触底了')
+    //先判断是否有下一页数据 以防发送没必要的请求
+    if(this.pagenum*this.pagesize>=this.total){
+      this.isBom=true
+      return
+    }
+    this.pagenum++
+    this.getGoodsList()
   }
 }
