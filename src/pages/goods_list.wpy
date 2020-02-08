@@ -4,11 +4,14 @@
 
 <script>
 import wepy from 'wepy'
+import mix from '@/mixins/goods_list.js'
 
 export default class extends wepy.page {
-    onLoad(options){
-        console.log(options)
-    }
+  mixins=[mix]
+  config={
+      navigationBarTitleText: "商品列表"
+  }
+    
 }
 </script>
 
