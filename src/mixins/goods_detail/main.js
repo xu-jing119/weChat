@@ -4,6 +4,14 @@ export default class extends wepy.mixin{
         goods_id:'',
         goodsInfo:[]
     }
+    methods={
+        getPreview(img){
+            wepy.previewImage({
+                current: img, // 当前显示图片的http链接
+                urls: this.goodsInfo.pics.map(x=>x.pics_big) // 需要预览的图片http链接列表
+              })
+        }
+    }
     onLoad(options){
         console.log(options);
         this.goods_id=options.goods_id

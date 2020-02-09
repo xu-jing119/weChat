@@ -70,6 +70,18 @@ swiper{
   }
 }
 }
+.tabs{
+  font-size: 24rpx;
+  .van-row{
+    border-top:1rpx solid #eee;
+    .van-col{
+      padding:25rpx 0 25rpx 10rpx;
+      &:nth-child(1){
+        border-right: 1rpx solid #eee
+      }
+    } 
+  }
+}
 </style>
 
 <script>
@@ -87,7 +99,7 @@ export default class extends wepy.page {
     <swiper indicator-dots circular>
      <block wx:for="{{goodsInfo.pics}}" wx:key="index">
           <swiper-item>
-           <image src="{{item.pics_big}}"></image>
+           <image src="{{item.pics_big}}" @tap="getPreview({{item.pics_big}})"></image>
           </swiper-item>
   </block>
     </swiper>
@@ -126,6 +138,20 @@ export default class extends wepy.page {
         </view>
         <van-icon name="arrow"></van-icon>
       </view>
+       <view class="sp_line"></view>
     </view>
+      <van-tabs>
+        <van-tab title="图文详情">
+          <wxparse data="{{goodsInfo.goods_introduce}}"></wxparse>
+        </van-tab>
+        <van-tab title="规格参数" class="tabs">
+           <block wx:for="{{goodsInfo.attrs}}" wx:key="index">
+          <van-row>
+            <van-col span="10">{{item.attr_name}}</van-col>
+            <van-col span="14">{{item.attr_value}}</van-col>
+          </van-row>
+           </block>
+        </van-tab>
+      </van-tabs>
   </view>
 </template>

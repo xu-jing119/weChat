@@ -72,7 +72,11 @@ export default class extends wepy.app {
   "van-cell-group": "./assets/vant/cell-group/index",
     "van-icon": "./assets/vant/icon/index",
     "van-tag": "./assets/vant/tag/index",
-    "van-card": "./assets/vant/card/index"
+    "van-card": "./assets/vant/card/index",
+     "van-tab": "./assets/vant/tab/index",
+  "van-tabs": "./assets/vant/tabs/index",
+  // 利用插件将html结构转换成wxml结构
+  wxparse:"./assets/wxparse/wxparse"
 }
 
   }
