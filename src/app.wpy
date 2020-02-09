@@ -76,13 +76,43 @@ export default class extends wepy.app {
      "van-tab": "./assets/vant/tab/index",
   "van-tabs": "./assets/vant/tabs/index",
   // 利用插件将html结构转换成wxml结构
-  wxparse:"./assets/wxparse/wxparse"
+  wxparse:"./assets/wxparse/wxparse",
+   //商品底部导航组件
+   "van-goods-action": "./assets/vant/goods-action/index",
+  "van-goods-action-icon": "./assets/vant/goods-action-icon/index",
+  "van-goods-action-button": "./assets/vant/goods-action-button/index"
 }
 
   }
-
+// 专门用来存储全局数据
+// 用this.$parent.globalData方法拿到全局数据
   globalData = {
-    userInfo: null
+    cart: []
+  }
+  // 把商品添加到购物车中
+  addGoodsCart(goods){
+    // console.log(goods);
+    // console.log('ok');
+    // 梳理出来的商品信息
+    const info = {
+      // 商品id
+      id:goods.goods_id,
+      // 商品名称
+      name:goods.goods_name,
+      // 商品图片
+      pic:goods.goods_small_logo,
+      // 商品价格
+      price:goods.goods_price,
+      // 商品数量
+      count:1,
+      // 默认选中状态
+      isCheck:true
+    }
+    this.globalData.cart.push(info)
+    console.log(this.globalData.cart);
+    
+    
+    
   }
 
   constructor () {
