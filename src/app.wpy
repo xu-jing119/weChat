@@ -91,6 +91,14 @@ export default class extends wepy.app {
   }
   // 把商品添加到购物车中
   addGoodsCart(goods){
+    // 先判断是否添加的是相同的商品
+    const i = this.globalData.cart.findIndex(x=>x.id===goods.goods_id)
+    if(i!==-1){
+      this.globalData.cart[i].count++
+      // console.log(this.globalData.cart);
+      this.saveGoodsCart()
+      return
+    }
     // console.log(goods);
     // console.log('ok');
     // 梳理出来的商品信息
@@ -109,10 +117,11 @@ export default class extends wepy.app {
       isCheck:true
     }
     this.globalData.cart.push(info)
-    console.log(this.globalData.cart);
-    
-    
-    
+    this.saveGoodsCart()
+  }
+  // 将加入购物车的商品信息持久化存到本地
+  saveGoodsCart(){
+    wepy.setStorageSync('cart',this.globalData.cart)
   }
 
   constructor () {
@@ -150,6 +159,7 @@ export default class extends wepy.app {
 
   onLaunch() {
     console.log('小程序 running……')
+    this.globalData.cart=wepy.getStorageSync('cart')||[]
   }
 }
 </script>

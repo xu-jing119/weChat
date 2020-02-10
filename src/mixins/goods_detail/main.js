@@ -25,7 +25,7 @@ export default class extends wepy.mixin{
         },
         onAddCart(){
             // console.log(this.goodsInfo);
-            // console.log(this.$parent.globalData);
+            console.log(this.$parent.globalData);
             this.$parent.addGoodsCart(this.goodsInfo)
             wepy.showToast({
                 title:"加入购物车成功",

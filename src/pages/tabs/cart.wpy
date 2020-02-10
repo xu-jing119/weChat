@@ -1,13 +1,39 @@
 <style lang="less">
-
+  .empty_cart{
+    font-size: 28rpx;
+    color:#666;
+    text-align: center;
+    padding-top: 200rpx;
+    image{
+      width: 180rpx;
+      height: 180rpx;
+    }
+  }
 </style>
 
 <script>
 import wepy from 'wepy'
+import mix from '@/mixins/tabs/cart.js'
 
-export default class extends wepy.page {}
+export default class extends wepy.page {
+  mixins = [mix];
+}
 </script>
 
 <template>
-  <view>购物车页面</view>
+  <view>
+    <!-- 空白购物车界面 -->
+    <view class="empty_cart" wx:if="{{isEmpty}}">
+      <image src="/assets/images/cart_empty@2x.png" />
+      <view>哎哟,购物车是空的哦~</view>
+    </view>
+    <!-- 非空白购物车界面 -->
+    <view wx:else>
+        <van-cell title="购物车列表" icon="shop-o" />
+        <!-- 购物车商品列表 -->
+        <block wx:for="{{cart}}" wx:key="id">
+        <van-card num="{{item.count}}" price="{{item.price}}" title="{{item.name}}" thumb="{{item.pic}}"/>
+        </block>
+    </view>
+  </view>
 </template>
