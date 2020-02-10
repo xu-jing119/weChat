@@ -42,6 +42,9 @@ export default class extends wepy.mixin{
             const addr=this.addressInfo
             const str = addr.provinceName+addr.cityName+addr.countyName+addr.detailInfo
             return str
+        },
+        total(){
+            return this.$parent.globalData.total
         }
     }
     onLoad(options){

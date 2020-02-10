@@ -97,8 +97,8 @@ export default class extends wepy.page {
         </van-swipe-cell>
         </block>
         <van-submit-bar price="{{ amount }}" button-text="提交订单"
-  bind:submit="onClickButton">
-   <van-checkbox value="{{true}}" checked-color="#d81e06">全选</van-checkbox>
+  bind:submit="submitOrder">
+   <van-checkbox value="{{isFullCheck}}" checked-color="#d81e06" bind:change="allCheckChange">全选</van-checkbox>
 </van-submit-bar>
     </view>
   </view>

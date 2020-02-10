@@ -1,0 +1,30 @@
+<template>
+    <view>
+        <view class="choose_addr_box">
+            <van-button type="info" size="small" @tap="chooseAddr">+请选择收货地址</van-button>
+        </view>
+        <!-- 分割线 -->
+        <image src="/assets/images/cart_border@2x.png" class="spa_line"></image>
+    </view>
+</template>
+<script>
+import wepy from "wepy"
+import mix from "@/mixins/order.js"
+export default class extends wepy.page {
+    config={
+         navigationBarTitleText: '确认订单',
+    }
+    mixins=[mix]
+}
+</script>
+<style lang="less">
+.choose_addr_box{
+    text-align: center;
+   padding:40px 0;
+}
+ .spa_line{
+   width: 100%;
+   height: 7px;
+   display:block
+    }
+</style>

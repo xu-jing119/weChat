@@ -22,6 +22,20 @@ export default class extends wepy.mixin {
         close(id){
             // console.log(id);
             this.$parent.removeGoods(id)
+        },
+        // 当全选状态改变时
+        allCheckChange(e){
+            // console.log(e.detail);
+            this.$parent.saveFullStateChange(e.detail)
+        },
+        // 点击提交订单时
+        submitOrder(){
+            if(this.amount<=0){
+                return wepy.baseToast('订单金额不能为空!')
+            }
+            wepy.navigateTo({
+                url:'/pages/order'
+            })
         }
     }
     computed={
@@ -43,11 +57,28 @@ export default class extends wepy.mixin {
             })
             return total*100
 
-        }   
+        },
+        // 计算是否全选
+        isFullCheck(){
+            var c = 0
+            var allCount = this.cart.length
+            this.cart.forEach(x=>{
+                if(x.isCheck){
+                    c++
+                }
+            })
+            return allCount===c
+        }
     }
     onLoad(){
+        // 渲染在购物车的商品
        this.cart=this.$parent.globalData.cart
     //    console.log(this.cart);
+    // 渲染购物车中已勾选的商品数量 购物车徽章
+    wepy.setTabBarBadge({
+        index: 3,
+        text: this.$parent.globalData.total+''
+      })
        
     }
 }

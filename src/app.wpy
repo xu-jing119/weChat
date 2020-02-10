@@ -16,6 +16,8 @@ export default class extends wepy.app {
       'pages/tabs/my',
       'pages/goods_detail/main',
       'pages/goods_list',
+      // 确认订单页面
+      "pages/order"
     ],
     window: {
       backgroundTextStyle: 'dark',
@@ -84,14 +86,17 @@ export default class extends wepy.app {
    "van-stepper": "./assets/vant/stepper/index",
     "van-checkbox": "./assets/vant/checkbox/index",
       "van-swipe-cell": "./assets/vant/swipe-cell/index",
-       "van-submit-bar": "./assets/vant/submit-bar/index"
+       "van-submit-bar": "./assets/vant/submit-bar/index",
+       "van-button": "./assets/vant/button/index"
 }
 
   }
 // 专门用来存储全局数据
 // 用this.$parent.globalData方法拿到全局数据
   globalData = {
-    cart: []
+    cart: [],
+    // 已勾选的购物车商品总数
+    total:0
   }
   // 把商品添加到购物车中
   addGoodsCart(goods){
@@ -139,6 +144,13 @@ export default class extends wepy.app {
        this.saveGoodsCart()
     } 
   }
+  // 全选商品选中状态
+  saveFullStateChange(state){
+    this.globalData.cart.forEach(x=>{
+      x.isCheck=state
+    })
+    this.saveGoodsCart()
+  }
   // 删除对应商品
   removeGoods(id){
     const i = this.globalData.cart.findIndex(x=>x.id===id)
@@ -150,9 +162,29 @@ export default class extends wepy.app {
   // 将加入购物车的商品信息持久化存到本地
   saveGoodsCart(){
     wepy.setStorageSync('cart',this.globalData.cart)
+    // 更新购物车徽章
+    this.renderCartBadge()
   }
- 
+ //渲染购物车的徽章
+async renderCartBadge(){
+  var c =0
+  this.globalData.cart.forEach(x=>{
+      if(x.isCheck){
+        c+=x.count
+      }
+    })
+    this.globalData.total=c
+   const res = await wepy.setTabBarBadge({
+  index: 3,
+  text: c+''
+}).catch(err=>err)
 
+// console.log(res);
+// 设置非TabBar页面报错
+if(res.errMsg!=="setTabBarBadge:ok"){
+
+}
+}
   constructor () {
     super()
     this.use('requestfix')
@@ -189,6 +221,7 @@ export default class extends wepy.app {
   onLaunch() {
     console.log('小程序 running……')
     this.globalData.cart=wepy.getStorageSync('cart')||[]
+    this.renderCartBadge()
   }
 }
 </script>
