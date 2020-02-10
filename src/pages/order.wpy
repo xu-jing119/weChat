@@ -1,8 +1,9 @@
 <template>
     <view>
-        <view class="choose_addr_box">
+        <view class="choose_addr_box" wx:if="{{isHaveAddr===false}}">
             <van-button type="info" size="small" @tap="chooseAddr">+请选择收货地址</van-button>
         </view>
+        <view class="addr_box" wx:else>已选择收货人</view>
         <!-- 分割线 -->
         <image src="/assets/images/cart_border@2x.png" class="spa_line"></image>
     </view>
