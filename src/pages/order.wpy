@@ -1,11 +1,32 @@
 <template>
-    <view>
+    <view class="order_container">
         <view class="choose_addr_box" wx:if="{{isHaveAddr===false}}">
             <van-button type="info" size="small" @tap="chooseAddr">+请选择收货地址</van-button>
         </view>
-        <view class="addr_box" wx:else>已选择收货人</view>
+        <view class="addr_box" wx:else>
+            <!-- 收货人 联系电话 -->
+            <view class="box1">
+            <text>收货人: {{addressInfo.userName}}</text>
+            <view @tap="chooseAddr">
+                <text>联系电话: {{addressInfo.telNumber}} </text>
+                <van-icon name="arrow" />
+            </view>
+            </view>
+            <!-- 收货地址 -->
+                <view class="box2">收货地址: {{userAddr}}</view>
+        </view>
         <!-- 分割线 -->
         <image src="/assets/images/cart_border@2x.png" class="spa_line"></image>
+        <!-- 确认订单的商品 -->
+        <view class="goods_list">
+            <block wx:for="{{cart}}" wx:key="id">
+                <van-card num="{{item.count}}" price="{{item.price}}" title="{{item.name}}" thumb="{{item.pic}}"/>
+            </block>
+        </view>
+        <!-- 登录下单按钮 -->
+    <van-button type="primary" size="large" class="login_btn" open-type="getUserInfo" bindgetuserinfo="getUserInfo" wx:if="{{isLogin===false}}">登录后下单</van-button>
+    <!-- 提交支付订单按钮 -->
+    <van-submit-bar price="{{amount}}" button-text="支付订单" bind:submit="onSubmit" wx:else/>
     </view>
 </template>
 <script>
@@ -28,4 +49,27 @@ export default class extends wepy.page {
    height: 7px;
    display:block
     }
+    .addr_box{
+          font-size: 32rpx;
+          padding:0 10rpx;
+    .box1{
+        display:flex;
+        justify-content: space-between;
+        padding:30rpx 0;
+    }
+    .box2{
+        padding-bottom:30rpx
+    }
+    }
+    .van-card{
+        border-bottom: 1rpx solid #eee;
+    }
+   .login_btn{
+       position:fixed;
+       bottom:0;
+       width: 100%;
+   }
+   .order_container{
+    padding-bottom: 50px;
+   }
 </style>
