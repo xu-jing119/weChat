@@ -54,7 +54,61 @@ export default class extends wepy.mixin{
             this.isLogin=true
             this.$apply() 
         },
-        onSubmit(){}
+        // 提交支付订单
+       async onSubmit(){
+            if(this.amount<=0){
+                return wepy.baseToast('支付金额不能为0!')
+            }
+            if(this.userAddr.length<=0){
+                return wepy.baseToast('请选择收货地址')
+            }
+            const {data:createRes} = await wepy.post('/my/orders/create',{
+                order_price:'0.01',
+                consignee_addr:this.userAddr,
+                order_detail:JSON.stringify(this.cart),
+                goods:this.cart.map(x=>{
+                    return {
+                        goods_id:x.id,
+                        goods_number:x.count,
+                        goods_price:x.price
+                    }
+                })
+            })
+            if(createRes.meta.status!==200){
+                return wepy.baseToast('创建订单失败!')
+            }
+            const orderInfo = createRes.message
+            // 生成预支付订单
+            const {data:orderResult} = await wepy.post("/my/orders/req_unifiedorder",{
+                order_number:orderInfo.order_number
+            })
+            // 生成预支付订单失败
+            if(orderResult.meta.status!==200){
+                return wepy.baseToast("生成预支付订单失败!")
+            }
+            // 走支付流程
+            //调用微信支付Api
+           const payResult= await wepy.requestPayment(orderResult.message.pay).catch(err=>err)
+        //    用户取消了支付
+           if(payResult.errMsg==="requestPayment:fail camcel"){
+            return wepy.baseToast("您已经取消了支付!")
+           }
+            //用户完成了支付 
+            // 检查用户支付的状态
+            const {data:payCheckResult} = await wepy.post("/my/orders/chkOrder",{
+                order_number:orderInfo.order_number
+            })
+            if(payCheckResult.meta.status!==200){
+                return wepy.baseToast("支付订单失败!")
+            }
+            wepy.showToast({
+                title:"支付订单成功!"
+            })
+            // 跳转到订单列表页面
+            wepy.navigateTo({
+                url:"/pages/orderList"
+            })
+        }
     }
     computed={
         isHaveAddr(){

@@ -88,6 +88,14 @@
 					"id": -1,
 					"name": "提交订单",
 					"pathName": "pages/order",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 6,
+					"name": "订单支付列表页面",
+					"pathName": "pages/orderList",
+					"query": "",
 					"scene": null
 				}
 			]
